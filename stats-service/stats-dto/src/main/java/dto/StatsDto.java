@@ -1,13 +1,12 @@
 package dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class StatsDto {
     private String app;
     private String uri;

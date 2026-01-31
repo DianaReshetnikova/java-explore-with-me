@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import server.exception.ValidationException;
 import server.service.StatService;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,10 @@ public class StatsController {
             @RequestParam(required = false) List<String> uris,
             @RequestParam(defaultValue = "false") boolean unique
     ) {
+        if ((start == null) || (end == null) || (end.isBefore(start))) {
+            throw new ValidationException("Uncorrected parameters start " + start + " & end " + end);
+        }
+
         return statService.getStats(start, end, uris, unique);
     }
 }
