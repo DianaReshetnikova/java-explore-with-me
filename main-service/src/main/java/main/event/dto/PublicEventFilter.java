@@ -1,5 +1,6 @@
 package main.event.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,10 +21,10 @@ public class PublicEventFilter {
 
     private Boolean paid;
 
-    @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
     private LocalDateTime rangeStart;
 
-    @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
     private LocalDateTime rangeEnd;
 
     @Builder.Default
