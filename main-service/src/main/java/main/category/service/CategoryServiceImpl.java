@@ -2,6 +2,7 @@ package main.category.service;
 
 import lombok.RequiredArgsConstructor;
 import main.category.Category;
+import main.category.CategoryDomainDto;
 import main.category.CategoryMapper;
 import main.category.CategoryRepository;
 import main.category.dto.NewCategoryDto;
@@ -21,6 +22,8 @@ import java.util.Collection;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final EventJpaRepository eventJpaRepository;
+    private final CategoryDomainDto mapper;
+
 
     @Override
     @Transactional
@@ -32,18 +35,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public Category updateCategoryByAdmin(NewCategoryDto categoryDto, Long categoryId) throws NotFoundException, ConditionsNotMetException {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Категория с указанным id: " + categoryId + " не найдена."));
+        Category category = mapper.dtoToDomain(categoryDto);
 
-        validateCategoryName(category.getName());
-
-        if (!category.getName().equals(categoryDto.getName())) {
-            if (categoryRepository.findByName(categoryDto.getName()).isPresent()) {
-                throw new ConditionsNotMetException("Конфликт имен категорий.");
-            }
+        Category old = getCategoryById(categoryId);
+        if (old.getName().equals(categoryDto.getName())) {
+            return old;
         }
+        validateCategoryName(category.getName());
+        category.setId(categoryId);
 
-        category.setName(categoryDto.getName());
         return categoryRepository.save(category);
     }
 
