@@ -6,7 +6,6 @@ import main.category.CategoryMapper;
 import main.category.CategoryRepository;
 import main.category.dto.NewCategoryDto;
 import main.event.repository.EventJpaRepository;
-import main.event.repository.EventRepository;
 import main.exception.ConditionsNotMetException;
 import main.exception.NotFoundException;
 import org.springframework.data.domain.PageRequest;
