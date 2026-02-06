@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import main.category.Category;
-import main.category.CategoryMapper;
+import main.category.CategoryDomainDto;
 import main.category.dto.NewCategoryDto;
 import main.category.dto.CategoryDto;
 import main.category.service.CategoryService;
@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/admin/categories", produces = "application/json")
 public class AdminCategoryController {
     private final CategoryService categoryService;
+    private final CategoryDomainDto mapper;
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto addCategory(@RequestBody @Valid NewCategoryDto categoryCreateDto) throws ConditionsNotMetException, DuplicateException {
-        Category category = categoryService.addCategory(categoryCreateDto);
-        return CategoryMapper.toCategoryFullDto(category);
+        Category category = categoryService.addCategory(mapper.dtoToDomain(categoryCreateDto));
+        return mapper.domainToDto(category);
     }
 
     @PatchMapping(
@@ -34,8 +35,8 @@ public class AdminCategoryController {
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto updateCategoryByAdmin(@PathVariable(name = "catId") @NotNull Long categoryId,
                                              @RequestBody @Valid NewCategoryDto categoryDto) throws ConditionsNotMetException, DuplicateException, NotFoundException {
-        Category category = categoryService.updateCategoryByAdmin(categoryDto, categoryId);
-        return CategoryMapper.toCategoryFullDto(category);
+        Category category = categoryService.updateCategoryByAdmin(mapper.dtoToDomain(categoryDto), categoryId);
+        return mapper.domainToDto(category);
     }
 
     @DeleteMapping(path = "/{catId}")
