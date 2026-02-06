@@ -7,8 +7,6 @@ import main.event.domain.EventState;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static client.StatsClient.DATE_TIME_PATTERN;
-
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @NoArgsConstructor
@@ -21,10 +19,10 @@ public class AdminFilterEvent {
 
     private List<Long> categories;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime rangeStart;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime rangeEnd;
 
     @Builder.Default
