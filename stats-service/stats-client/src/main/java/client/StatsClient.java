@@ -2,7 +2,6 @@ package client;
 
 import dto.HitDto;
 import dto.StatsDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
