@@ -1,7 +1,6 @@
 package main.category.service;
 
 import main.category.Category;
-import main.category.dto.NewCategoryDto;
 import main.exception.ConditionsNotMetException;
 import main.exception.DuplicateException;
 import main.exception.NotFoundException;
