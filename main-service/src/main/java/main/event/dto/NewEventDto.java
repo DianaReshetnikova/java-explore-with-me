@@ -13,6 +13,8 @@ import static client.StatsClient.DATE_TIME_PATTERN;
 
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
+@AllArgsConstructor
+@NoArgsConstructor
 public class NewEventDto {
     @Size(min = 20, max = 2000, message = "Размер аннотации не совпадает с заданными пределами")
     @NotBlank

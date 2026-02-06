@@ -11,6 +11,8 @@ import static client.StatsClient.DATE_TIME_PATTERN;
 
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class EventShortDto {
     private Long id;

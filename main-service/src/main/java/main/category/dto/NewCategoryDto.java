@@ -7,6 +7,8 @@ import lombok.*;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class NewCategoryDto {
     @NotBlank

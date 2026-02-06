@@ -8,6 +8,8 @@ import lombok.*;
 
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserCreateDto {
     @NotBlank
