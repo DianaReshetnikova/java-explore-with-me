@@ -3,6 +3,7 @@ package main.event.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import main.event.domain.EventState;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
