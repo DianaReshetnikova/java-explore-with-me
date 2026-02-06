@@ -91,6 +91,11 @@ public class EventServiceImpl implements EventService {
             event.setParticipantLimit(patchEvent.getParticipantLimit());
         }
 
+        if (patchEvent.getEventDate() != null &&
+                patchEvent.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new ValidateException("Дата события должна быть не менее чем через 2 часа от текущего момента");
+        }
+
         if (patchEvent.getRequestModeration() != null) {
             event.setRequestModeration(patchEvent.getRequestModeration());
         }
