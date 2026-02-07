@@ -14,7 +14,7 @@ public interface StatRepository extends JpaRepository<Hit, Long> {
             SELECT new server.model.Stats(h.app, h.uri, COUNT(h.ip))
             FROM Hit h
             WHERE h.timestamp BETWEEN :start AND :end
-            AND (:uris IS NULL OR h.uri IN :uris)
+            AND (h.uri IN :uris OR :uris IS NULL)
             GROUP BY h.app, h.uri
             """)
     List<Stats> findAllStatsNotUniqueIp(@Param("start") LocalDateTime start,
@@ -25,7 +25,7 @@ public interface StatRepository extends JpaRepository<Hit, Long> {
             SELECT new server.model.Stats(h.app, h.uri, COUNT(DISTINCT h.ip))
             FROM Hit h
             WHERE h.timestamp BETWEEN :start AND :end
-            AND (:uris IS NULL OR h.uri IN :uris)
+            AND  (h.uri IN :uris OR :uris IS NULL)
             GROUP BY h.app, h.uri
             """)
     List<Stats> findAllStatsUniqueIp(@Param("start") LocalDateTime start,

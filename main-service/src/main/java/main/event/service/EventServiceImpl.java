@@ -149,6 +149,14 @@ public class EventServiceImpl implements EventService {
         if (filter.getRangeStart() != null && filter.getRangeEnd() != null && filter.getRangeEnd().isBefore(filter.getRangeStart())) {
             throw new ValidateException("end must be after start");
         }
+
+        HitDto mainHit = new HitDto();
+        mainHit.setApp(appName);
+        mainHit.setIp(ip);
+        mainHit.setUri("/events");
+        mainHit.setTimestamp(LocalDateTime.now());
+        client.post(mainHit);
+
         List<Event> events = storage.getEventsByPublicFilter(filter);
         events.stream()
                 .map(event -> {
@@ -160,6 +168,7 @@ public class EventServiceImpl implements EventService {
                     return dto;
                 })
                 .forEach(client::post);
+
         List<String> uris = events.stream()
                 .map(event -> "/events/" + event.getId())
                 .toList();
@@ -181,6 +190,7 @@ public class EventServiceImpl implements EventService {
                     .sorted(Comparator.comparing(Event::getViews))
                     .toList();
         }
+
         return events;
     }
 
@@ -198,7 +208,14 @@ public class EventServiceImpl implements EventService {
         client.post(dto);
         List<StatsDto> stat = client.get(LocalDateTime.now().minusYears(1),
                 LocalDateTime.now().plusYears(1), List.of(dto.getUri()), true);
-        event.setViews(stat.getFirst().getHits());
+//        event.setViews(stat.getFirst().getHits());
+
+        if (stat != null && !stat.isEmpty()) {
+            event.setViews(stat.get(0).getHits());
+        } else {
+            event.setViews(0L);
+        }
+
         return event;
     }
 
