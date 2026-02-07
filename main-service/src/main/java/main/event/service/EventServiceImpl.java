@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
@@ -31,6 +33,9 @@ public class EventServiceImpl implements EventService {
     private final CategoryService categoryService;
     private final EventRepository storage;
     private final StatsClient client;
+
+    @Value("${spring.application.name}")
+    private String appName;
 
     @Override
     @Transactional
@@ -148,7 +153,7 @@ public class EventServiceImpl implements EventService {
         events.stream()
                 .map(event -> {
                     HitDto dto = new HitDto();
-                    dto.setApp("ewm-main-service");
+                    dto.setApp(appName);
                     dto.setIp(ip);
                     dto.setUri("/events/" + event.getId());
                     dto.setTimestamp(LocalDateTime.now());
@@ -187,7 +192,7 @@ public class EventServiceImpl implements EventService {
         }
         HitDto dto = new HitDto();
         dto.setIp(ip);
-        dto.setApp("ewm-main-service");
+        dto.setApp(appName);
         dto.setUri("/events/" + eventId);
         dto.setTimestamp(LocalDateTime.now());
         client.post(dto);

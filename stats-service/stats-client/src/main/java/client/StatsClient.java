@@ -26,7 +26,6 @@ public class StatsClient {
         this.statsUrl = statsUrl;
     }
 
-
     //Сохранение информации о том, что на uri конкретного сервиса был отправлен запрос пользователем.
     // Название сервиса, uri и ip пользователя указаны в теле запроса.
     public void post(HitDto dto) {
